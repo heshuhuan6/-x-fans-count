@@ -37,7 +37,7 @@ X 网页自己发出的 GraphQL 请求里，本来就带了每个用户的 `foll
 **使用**
 
 - 打开 [x.com](https://x.com) 刷信息流，每个账号用户名下方会自动出现蓝色「粉丝 X万」；
-- 粉丝数随页面请求返回逐步出现，刚加载时可能先显示「粉丝 …」，数据到了会自动刷新；
+- 粉丝数随页面请求返回逐步出现，数据到了徽标会自动显示；把鼠标悬停在徽标上可以看到精确粉丝数；
 - 覆盖位置：首页时间线、推文详情页、关注者 / 正在关注列表、Verified Followers 列表、搜索页用户卡片等。
 
 **卸载**
@@ -94,7 +94,7 @@ It only reads X's own network responses, sends nothing anywhere else, and reques
 **Use**
 
 - Open [x.com](https://x.com) and scroll — a blue "粉丝 X万" line appears under each username automatically;
-- Counts appear progressively as page requests resolve; you may briefly see "粉丝 …" before the data arrives;
+- Counts appear progressively as page requests resolve; hover the badge to see the exact follower count;
 - Covered areas: home timeline, tweet detail pages, followers / following lists, Verified Followers lists, search result user cards, etc.
 
 **Uninstall**

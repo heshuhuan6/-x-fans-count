@@ -20,6 +20,12 @@
     about: 1, login: 1, signup: 1, logout: 1, download: 1, share: 1
   };
 
+  function renderBadge(badge, screen) {
+    var count = fans.get(screen);
+    badge.textContent = '粉丝 ' + formatCount(count);
+    badge.title = count.toLocaleString('en-US') + ' 位粉丝';
+  }
+
   function formatCount(n) {
     if (typeof n !== 'number' || !isFinite(n) || n < 0) return '';
     if (n >= 10000) {
@@ -59,9 +65,11 @@
     style.textContent =
       '.' + BADGE_CLASS + ' {' +
         'color: #1d9bf0 !important;' +
-        'font-size: 12.5px !important;' +
-        'line-height: 1.4 !important;' +
+        'font-size: 13px !important;' +
+        'line-height: 20px !important;' +
+        'margin-top: 2px !important;' +
         'font-weight: 400 !important;' +
+        'font-variant-numeric: tabular-nums;' +
         'white-space: nowrap;' +
         'overflow: hidden;' +
         'text-overflow: ellipsis;' +
@@ -87,23 +95,24 @@
   function paint(root) {
     var t = extractTarget(root);
     if (!t) return;
+    if (!fans.has(t.screen)) return; // 粉丝数还没到，不渲染，等数据到了再画
     t.box.setAttribute(DONE_ATTR, '1');
     t.box.setAttribute(SCREEN_ATTR, t.screen);
     var badge = document.createElement('div');
     badge.className = BADGE_CLASS;
-    badge.textContent = '粉丝 ' + (fans.has(t.screen) ? formatCount(fans.get(t.screen)) : '…');
+    renderBadge(badge, t.screen);
     t.box.appendChild(badge);
   }
 
   function refreshAll() {
-    // 已有徽标的：用最新数字刷新文字
+    // 已有徽标的：用最新数字刷新
     var boxes = document.querySelectorAll('div[data-testid="User-Name"][' + DONE_ATTR + ']');
     for (var i = 0; i < boxes.length; i++) {
       var box = boxes[i];
       var screen = box.getAttribute(SCREEN_ATTR);
       var badge = box.querySelector(':scope > .' + BADGE_CLASS);
       if (screen && badge && fans.has(screen)) {
-        badge.textContent = '粉丝 ' + formatCount(fans.get(screen));
+        renderBadge(badge, screen);
       }
     }
     // 还没处理过的节点补画
